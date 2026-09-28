@@ -169,7 +169,7 @@ fun GlassSurface(
             }
         }
 
-        // 顶部高光，让玻璃有厚度感
+        // 顶部高光 + 底部内阴影 + 流动反光，让玻璃有厚度与"液体"感
         Box(
             Modifier
                 .matchParentSize()
@@ -180,6 +180,8 @@ fun GlassSurface(
                     )
                 )
         )
+        GlassInnerShadow(Modifier.matchParentSize(), cornerRadius)
+        SpecularSweep(state, Modifier.matchParentSize(), cornerRadius)
 
         Column(Modifier.padding(contentPadding), content = content)
     }
@@ -224,6 +226,8 @@ fun GlassBox(
                 endY = 160f,
             )
         ))
+        GlassInnerShadow(Modifier.matchParentSize(), cornerRadius)
+        SpecularSweep(state, Modifier.matchParentSize(), cornerRadius)
         content()
     }
 }
@@ -254,11 +258,29 @@ fun SpecularSweep(state: LiquidState, modifier: Modifier = Modifier, cornerRadiu
                 Brush.linearGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color(0x1AFFFFFF),
+                        Color(0x14FFFFFF),
+                        Color(0x22FFFFFF),
+                        Color(0x14FFFFFF),
                         Color.Transparent,
                     ),
-                    start = Offset(x = -600f + progress * 2400f, y = 0f),
-                    end = Offset(x = -300f + progress * 2400f, y = 600f),
+                    start = Offset(x = -420f + progress * 2200f, y = -160f),
+                    end = Offset(x = -120f + progress * 2200f, y = 620f),
+                )
+            )
+    )
+}
+
+/** 玻璃内阴影：让面板从背景上"浮起" */
+@Composable
+fun GlassInnerShadow(modifier: Modifier = Modifier, cornerRadius: Dp = 26.dp) {
+    val shape = RoundedCornerShape(cornerRadius)
+    Box(
+        modifier
+            .clip(shape)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color.Transparent, Color(0x1F000000)),
+                    startY = 240f,
                 )
             )
     )

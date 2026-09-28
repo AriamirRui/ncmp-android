@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("com.android.compose.screenshot")
 }
 
 android {
@@ -47,6 +48,9 @@ android {
         buildConfig = true
     }
 
+    // Compose 预览截图测试
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -74,6 +78,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     testImplementation("junit:junit:4.13.2")
+    screenshotTestImplementation("androidx.compose.ui:ui-tooling")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 }

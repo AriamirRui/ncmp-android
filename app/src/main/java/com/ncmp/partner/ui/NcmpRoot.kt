@@ -100,9 +100,37 @@ fun NcmpRoot(vm: NcmpViewModel) {
             TopBar(state)
             Box(Modifier.weight(1f)) {
                 when (page) {
-                    Page.RUN -> RunScreen(state, liquid, vm)
-                    Page.CONFIG -> ConfigScreen(state, liquid, vm)
-                    Page.HISTORY -> HistoryScreen(state, liquid, vm)
+                    Page.RUN -> RunScreen(
+                        state = state,
+                        liquid = liquid,
+                        onStart = { vm.startTask() },
+                        onCancel = { vm.cancelTask() },
+                        onValidate = { vm.validate() },
+                        onRefreshCookie = { vm.refreshCookie() },
+                        onClearLogs = { vm.clearLogs() },
+                    )
+                    Page.CONFIG -> ConfigScreen(
+                        state = state,
+                        liquid = liquid,
+                        onSave = { config ->
+                            vm.updateConfig(config)
+                            vm.scheduleAutoTask(config)
+                        },
+                        onSaveAndValidate = { config ->
+                            vm.updateConfig(config)
+                            vm.scheduleAutoTask(config)
+                            vm.validate()
+                        },
+                    )
+                    Page.HISTORY -> HistoryScreen(
+                        state = state,
+                        liquid = liquid,
+                        onRefresh = { vm.refreshHistory() },
+                        onClear = { vm.clearHistory() },
+                        onOpen = { record -> vm.openRecord(record) },
+                        onDelete = { record -> vm.deleteRecord(record) },
+                        onCloseDetail = { vm.closeRecord() },
+                    )
                     Page.ABOUT -> AboutScreen(state, liquid)
                 }
             }

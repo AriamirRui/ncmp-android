@@ -28,13 +28,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ncmp.partner.data.RunRecord
 import com.ncmp.partner.ui.components.GlassButton
 import com.ncmp.partner.ui.components.GlassChip
 import com.ncmp.partner.ui.glass.GlassSurface
 import com.ncmp.partner.ui.glass.LiquidState
 import com.ncmp.partner.ui.glass.lightGlass
 import com.ncmp.partner.ui.theme.GlassPalette
-import com.ncmp.partner.vm.NcmpViewModel
 import com.ncmp.partner.vm.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +42,11 @@ import com.ncmp.partner.vm.UiState
 fun HistoryScreen(
     state: UiState,
     liquid: LiquidState,
-    vm: NcmpViewModel,
+    onRefresh: () -> Unit,
+    onClear: () -> Unit,
+    onOpen: (RunRecord) -> Unit,
+    onDelete: (RunRecord) -> Unit,
+    onCloseDetail: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -61,8 +65,8 @@ fun HistoryScreen(
             ) {
                 Text("运行历史", color = GlassPalette.TextPrimary, fontSize = 13.5.sp, fontWeight = FontWeight.SemiBold)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    GlassButton("刷新", { vm.refreshHistory() }, modifier = Modifier.width(74.dp))
-                    GlassButton("清空", { vm.clearHistory() }, danger = true, modifier = Modifier.width(74.dp))
+                    GlassButton("刷新", onRefresh, modifier = Modifier.width(74.dp))
+                    GlassButton("清空", onClear, danger = true, modifier = Modifier.width(74.dp))
                 }
             }
         }
@@ -83,7 +87,7 @@ fun HistoryScreen(
                         Modifier
                             .fillMaxWidth()
                             .lightGlass(20.dp)
-                            .clickable { vm.openRecord(record) }
+                            .clickable { onOpen(record) }
                             .padding(14.dp)
                     ) {
                         Row(
@@ -117,7 +121,7 @@ fun HistoryScreen(
     val detail = state.detailRecord
     if (detail != null) {
         ModalBottomSheet(
-            onDismissRequest = { vm.closeRecord() },
+            onDismissRequest = onCloseDetail,
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = Color(0xF21A1A22),
             contentColor = GlassPalette.TextPrimary,
@@ -133,7 +137,7 @@ fun HistoryScreen(
                         Text(detail.time, color = GlassPalette.TextPrimary, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
                         Text(detail.summary.ifBlank { "-" }, color = GlassPalette.TextTertiary, fontSize = 11.5.sp)
                     }
-                    GlassButton("删除", { vm.deleteRecord(detail) }, danger = true, modifier = Modifier.width(78.dp))
+                    GlassButton("删除", { onDelete(detail) }, danger = true, modifier = Modifier.width(78.dp))
                 }
                 Spacer(Modifier.height(12.dp))
                 Box(

@@ -50,7 +50,6 @@ import com.ncmp.partner.ui.components.ThinProgress
 import com.ncmp.partner.ui.glass.GlassSurface
 import com.ncmp.partner.ui.glass.LiquidState
 import com.ncmp.partner.ui.theme.GlassPalette
-import com.ncmp.partner.vm.NcmpViewModel
 import com.ncmp.partner.vm.UiLogLine
 import com.ncmp.partner.vm.UiState
 
@@ -60,7 +59,11 @@ private val LOG_FILTERS = listOf("全部" to "ALL", "警告" to "WARN", "错误"
 fun RunScreen(
     state: UiState,
     liquid: LiquidState,
-    vm: NcmpViewModel,
+    onStart: () -> Unit,
+    onCancel: () -> Unit,
+    onValidate: () -> Unit,
+    onRefreshCookie: () -> Unit,
+    onClearLogs: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -156,7 +159,7 @@ fun RunScreen(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             GlassButton(
                 text = if (state.busy) "运行中…" else "开始任务",
-                onClick = { vm.startTask() },
+                onClick = onStart,
                 enabled = !state.busy,
                 accent = true,
                 modifier = Modifier.weight(1f),
@@ -164,7 +167,7 @@ fun RunScreen(
             )
             GlassButton(
                 text = if (state.cancelling) "终止中…" else "终止",
-                onClick = { vm.cancelTask() },
+                onClick = onCancel,
                 enabled = state.busy && !state.cancelling,
                 danger = true,
                 modifier = Modifier.weight(0.62f),
@@ -174,14 +177,14 @@ fun RunScreen(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             GlassButton(
                 text = if (state.validating) "验证中…" else "验证 Cookie",
-                onClick = { vm.validate() },
+                onClick = onValidate,
                 enabled = !state.busy && !state.validating,
                 modifier = Modifier.weight(1f),
                 icon = { Icon(Icons.Filled.Verified, null, tint = GlassPalette.TextPrimary, modifier = Modifier.size(17.dp)) },
             )
             GlassButton(
                 text = "刷新 Cookie",
-                onClick = { vm.refreshCookie() },
+                onClick = onRefreshCookie,
                 enabled = !state.busy,
                 modifier = Modifier.weight(1f),
                 icon = { Icon(Icons.Filled.Refresh, null, tint = GlassPalette.TextPrimary, modifier = Modifier.size(17.dp)) },
@@ -256,7 +259,7 @@ fun RunScreen(
                         tint = GlassPalette.TextTertiary,
                         modifier = Modifier
                             .size(18.dp)
-                            .clickable { vm.clearLogs() },
+                            .clickable { onClearLogs() },
                     )
                 }
             }

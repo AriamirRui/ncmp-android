@@ -61,6 +61,7 @@ fun GlassButton(
 ) {
     val shape = RoundedCornerShape(18.dp)
     val fill: Brush = when {
+        !enabled -> Brush.verticalGradient(listOf(Color(0x14FFFFFF), Color(0x08FFFFFF)))
         accent -> Brush.horizontalGradient(listOf(GlassPalette.Accent, GlassPalette.AccentSoft))
         danger -> Brush.horizontalGradient(listOf(Color(0xFFB03A3A), Color(0xFFD25050)))
         else -> Brush.verticalGradient(listOf(Color(0x26FFFFFF), Color(0x0FFFFFFF)))

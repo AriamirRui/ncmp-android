@@ -6,6 +6,9 @@ local.properties
 # 打包好的 APK（本地留档，不提交到版本库）
 output/
 
+# 截图测试基准图（首次运行 gradle updateDebugScreenshotTest 自动生成）
+app/src/debug/screenshotTest/
+
 # IDE
 .idea/
 *.iml

@@ -4,6 +4,19 @@
 > 采用 **原生 Kotlin + Jetpack Compose** 实现，界面为**液态玻璃（Liquid Glass）**风格：
 > 真实背景折射模糊、流动彩色光斑、玻璃描边与高光。
 
+## 界面预览
+
+> 下图为 Compose 预览在 JVM 上真实渲染的结果（`gradle updateDebugScreenshotTest` 生成），
+> 非设计稿；实机在 Android 12+ 上还会叠加 GPU 背景模糊。
+
+| 运行控制 | 运行中 | 配置 |
+| --- | --- | --- |
+| ![运行](docs/screenshots/RunScreenPreview.png) | ![运行中](docs/screenshots/RunScreenBusyPreview.png) | ![配置](docs/screenshots/ConfigScreenPreview.png) |
+
+| 运行历史 | 关于 |
+| --- | --- |
+| ![历史](docs/screenshots/HistoryScreenPreview.png) | ![关于](docs/screenshots/AboutScreenPreview.png) |
+
 ## 功能
 
 - **Cookie 校验**：一键验证 MUSIC_U / __csrf 并显示昵称

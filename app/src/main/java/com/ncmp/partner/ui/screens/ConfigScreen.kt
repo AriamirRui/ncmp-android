@@ -27,14 +27,14 @@ import com.ncmp.partner.ui.components.GlassTextField
 import com.ncmp.partner.ui.glass.GlassSurface
 import com.ncmp.partner.ui.glass.LiquidState
 import com.ncmp.partner.ui.theme.GlassPalette
-import com.ncmp.partner.vm.NcmpViewModel
 import com.ncmp.partner.vm.UiState
 
 @Composable
 fun ConfigScreen(
     state: UiState,
     liquid: LiquidState,
-    vm: NcmpViewModel,
+    onSave: (Config) -> Unit,
+    onSaveAndValidate: (Config) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     // 本地编辑态，点击保存后写回
@@ -213,20 +213,13 @@ fun ConfigScreen(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             GlassButton(
                 text = "保存配置",
-                onClick = {
-                    vm.updateConfig(draft)
-                    vm.scheduleAutoTask(draft)
-                },
+                onClick = { onSave(draft) },
                 accent = true,
                 modifier = Modifier.weight(1f),
             )
             GlassButton(
                 text = "保存并验证",
-                onClick = {
-                    vm.updateConfig(draft)
-                    vm.scheduleAutoTask(draft)
-                    vm.validate()
-                },
+                onClick = { onSaveAndValidate(draft) },
                 modifier = Modifier.weight(1f),
             )
         }
