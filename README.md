@@ -4,6 +4,16 @@
 > 采用 **原生 Kotlin + Jetpack Compose** 实现，界面为**液态玻璃（Liquid Glass）**风格：
 > 真实背景折射模糊、流动彩色光斑、玻璃描边与高光。
 
+## 下载安装
+
+**[⬇ 下载 APK（v1.0.0）](https://github.com/AriamirRui/ncmp-android/releases/download/v1.0.0/ncmp-android-v1.0.0.apk)** · 10.6 MB · 最低 Android 8.0
+
+1. 手机浏览器打开上方链接下载 APK（或在 [Releases](https://github.com/AriamirRui/ncmp-android/releases) 页面选择版本）
+2. 允许「安装未知来源应用」后点击安装
+3. 打开应用 → 「配置」页填写 `MUSIC_U` 与 `__csrf` → 保存 → 回到「运行」页点「开始任务」
+
+> 该 APK 使用 debug 签名，仅供个人测试使用；正式分发请自行签名。
+
 ## 界面预览
 
 > 下图为 Compose 预览在 JVM 上真实渲染的结果（`gradle updateDebugScreenshotTest` 生成），
