@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">音乐合伙人</string>
+    <string name="app_name_full">网易云音乐合伙人</string>
+    <string name="notif_channel_name">任务状态</string>
+    <string name="notif_channel_desc">每日任务执行结果与 Cookie 失效提醒</string>
+</resources>

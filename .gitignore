@@ -1,0 +1,16 @@
+# 构建产物
+build/
+.gradle/
+local.properties
+
+# 打包好的 APK（本地留档，不提交到版本库）
+output/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
